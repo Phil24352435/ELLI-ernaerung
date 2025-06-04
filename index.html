@@ -83,7 +83,33 @@
       Gesamtkalorien: <span id="totalCalories">0</span> kcal
     </div>
     <!-- Fortschrittskreis -->
-<div id="kalorienkreis-section" style="margin: 2rem auto; text-align: center;">
+<section class="kcal-rechner">
+  <h2>🧮 Kalorienrechner</h2>
+  <form id="kcalForm" autocomplete="off">
+    <input type="number" id="menge" min="1" value="1" style="width: 60px;" required />
+    <select id="lebensmittel">
+      <option value="kartoffel">🥔 Kartoffel</option>
+      <option value="ei">🥚 Ei</option>
+      <option value="kaese">🧀 Käse (50g)</option>
+      <option value="tomate">🍅 Tomate</option>
+      <option value="joghurt">🥛 Joghurt (100g)</option>
+      <option value="banane">🍌 Banane</option>
+      <option value="huhn">🍗 Hähnchenbrust (100g)</option>
+      <option value="reis">🍚 Reis (100g)</option>
+      <option value="apfel">🍏 Apfel</option>
+      <!-- Ergänze beliebig -->
+    </select>
+    <button type="submit">Hinzufügen</button>
+  </form>
+  <ul id="kcalListe"></ul>
+  <div><strong>Gesamt:</strong> <span id="kcalGesamt">0</span> kcal</div>
+</section>
+
+</script>
+
+</html>
+
+    <div id="kalorienkreis-section" style="margin: 2rem auto; text-align: center;">
   <canvas id="kalorienKreis" width="220" height="220"></canvas>
   <p id="kalorienText" style="font-size: 18px; color: #fff; margin-top: 10px;">
     0 / 1500 kcal
@@ -119,6 +145,8 @@
         .catch(err => console.log("❌ Service Worker Fehler:", err));
     });
   }
+
+
 </script>
 
 </html>

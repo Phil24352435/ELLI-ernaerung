@@ -224,3 +224,66 @@ function zeigeMotivationsspruch() {
 zeigeMotivationsspruch();
 ladeProfil();
 zeigeBMI(); 
+
+const kcalDaten = {
+  kartoffel: 70,      // pro Stück (mittel)
+  ei: 80,             // pro Stück
+  kaese: 180,         // pro 50g
+  tomate: 20,         // pro Stück
+  joghurt: 60,        // pro 100g
+  banane: 90,         // pro Stück
+  huhn: 110,          // pro 100g
+  reis: 130,          // pro 100g, gekocht
+  apfel: 55           // pro Stück
+};
+
+let kcalEintraege = [];
+const kcalForm = document.getElementById("kcalForm");
+const kcalListe = document.getElementById("kcalListe");
+const kcalGesamt = document.getElementById("kcalGesamt");
+
+kcalForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const menge = parseInt(document.getElementById("menge").value);
+  const lebensmittel = document.getElementById("lebensmittel").value;
+  const kcal = menge * kcalDaten[lebensmittel];
+  kcalEintraege.push({ menge, lebensmittel, kcal });
+  renderKcal();
+});
+
+function renderKcal() {
+  let gesamt = 0;
+  kcalListe.innerHTML = "";
+  kcalEintraege.forEach((entry, idx) => {
+    gesamt += entry.kcal;
+    kcalListe.innerHTML += `
+      <li>
+        ${entry.menge} × ${iconLebensmittel(entry.lebensmittel)} = ${entry.kcal} kcal
+        <button class="delete-btn" title="Eintrag löschen" onclick="deleteKcalEintrag(${idx})">&times;</button>
+      </li>
+    `;
+  });
+  kcalGesamt.textContent = gesamt;
+}
+
+window.deleteKcalEintrag = function(index) {
+  kcalEintraege.splice(index, 1);
+  renderKcal();
+};
+
+function iconLebensmittel(lm) {
+  switch (lm) {
+    case "kartoffel": return "🥔 Kartoffel";
+    case "ei": return "🥚 Ei";
+    case "kaese": return "🧀 Käse";
+    case "tomate": return "🍅 Tomate";
+    case "joghurt": return "🥛 Joghurt";
+    case "banane": return "🍌 Banane";
+    case "huhn": return "🍗 Hähnchen";
+    case "reis": return "🍚 Reis";
+    case "apfel": return "🍏 Apfel";
+    default: return lm;
+  }
+}
+// beim Laden der Seite die Kalorien anzeigen
+document.addEventListener("DOMContentLoaded", renderKcal);
