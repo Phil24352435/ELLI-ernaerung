@@ -6,7 +6,7 @@ const totalEl = document.getElementById("totalCalories");
 const progressBar = document.getElementById("progressBar");
 const progressMessage = document.getElementById("progressMessage");
 
-const ctx = document.getElementById("weeklyChart").getContext("2d");
+
 let chart;
 
 // 🧾 Einträge anzeigen
@@ -79,11 +79,7 @@ function updateProgress(kcal) {
   }
 }
 
-// 📊 Wochenstatistik vorbereiten
-function renderChart() {
-  const dailyTotals = {};
-
-  // Letzte 7 Tage
+ // Letzte 7 Tage
   const today = new Date();
   for (let i = 6; i >= 0; i--) {
     const date = new Date(today);
@@ -104,40 +100,7 @@ function renderChart() {
 
   if (chart) chart.destroy();
 
-  chart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "Kalorien pro Tag",
-        data,
-        backgroundColor: data.map(kcal => {
-          if (kcal <= zielKalorien * 0.6) return "#f1c40f";
-          if (kcal <= zielKalorien) return "#2ecc71";
-          return "#e74c3c";
-        }),
-        borderRadius: 8,
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { color: "#fff" },
-          grid: { color: "#333" }
-        },
-        x: {
-          ticks: { color: "#fff" },
-          grid: { color: "#333" }
-        }
-      },
-      plugins: {
-        legend: { display: false }
-      }
-    }
-  });
-}
+
 
 // ▶️ Beim Start
 renderTable();
