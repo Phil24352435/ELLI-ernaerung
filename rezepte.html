@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ellis Rezeptwelt</title>
+  <link rel="stylesheet" href="rezepte.css" />
+</head>
+<body>
+  <header>
+    <h1>🍽️ Ellis Rezeptwelt</h1>
+    <p>Finde leckere Rezepte für jeden Tag – ob schnell, gesund oder ausgefallen.</p>
+  </header>
+
+  <nav>
+    <section class="rezepte-box">
+      <button id="dropdownBtn">🍽️ Schnelle Rezepte</button>
+      <ul id="rezeptListe" class="dropdown-menu hidden"></ul>
+      <div id="rezeptAnzeigen" class="rezept-details"></div>
+    </section>
+    <button onclick="zeigeKategorie('schnell')">⏱️ Schnell & Einfach</button>
+    <button onclick="zeigeKategorie('schnell')">⚡ Schnelle Rezepte</button>
+    <button onclick="zeigeKategorie('kinder')">👶 Für Kinder</button>
+    <button onclick="zeigeKategorie('gesund')">🥗 Gesund & Leicht</button>
+    <button onclick="zeigeKategorie('herzhaft')">🍲 Herzhaft</button>
+    <button onclick="zeigeKategorie('suess')">🍰 Süßes</button>
+    <button onclick="zeigeKategorie('luxus')">🍷 Luxus-Rezepte</button>
+  </nav>
+
+  <main id="rezepteContainer">
+    <!-- Rezepte werden hier dynamisch eingefügt -->
+  </main>
+
+  <footer>
+    <p><a href="index.html">🔙 Zurück zum Ernährungstagebuch</a></p>
+  </footer>
+
+  <script src="rezepte.js"></script>
+</body>
+</html>

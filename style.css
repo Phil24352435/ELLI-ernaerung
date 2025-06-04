@@ -281,3 +281,23 @@ footer p {
   text-align: center;
   text-shadow: 0 0 6px #00ff88;
 }
+.rezepte-link {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.rezepte-link button {
+  background: linear-gradient(to right, #ff80c0, #ff0080);
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff80c0;
+  transition: 0.3s ease;
+}
+
+.rezepte-link button:hover {
+  transform: scale(1.05);
+}
