@@ -6,7 +6,6 @@ const totalEl = document.getElementById("totalCalories");
 const progressBar = document.getElementById("progressBar");
 const progressMessage = document.getElementById("progressMessage");
 
-
 let chart;
 
 // 🧾 Einträge anzeigen
@@ -30,8 +29,9 @@ function renderTable() {
 
   totalEl.textContent = total;
   updateProgress(total);
-  renderChart();
+  aktualisiereKreis(total);
 }
+
 
 // ➕ Eintrag hinzufügen
 document.getElementById("entryForm").addEventListener("submit", function (e) {
@@ -79,28 +79,148 @@ function updateProgress(kcal) {
   }
 }
 
- // Letzte 7 Tage
-  const today = new Date();
-  for (let i = 6; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    const key = date.toISOString().split("T")[0];
-    dailyTotals[key] = 0;
-  }
-
-  // Kalorien summieren
-  entries.forEach((entry) => {
-    if (dailyTotals.hasOwnProperty(entry.date)) {
-      dailyTotals[entry.date] += parseInt(entry.calories);
-    }
-  });
-
-  const labels = Object.keys(dailyTotals);
-  const data = Object.values(dailyTotals);
-
-  if (chart) chart.destroy();
-
-
-
 // ▶️ Beim Start
 renderTable();
+function aktualisiereKreis(gesamtKcal) {
+  const zielKalorien = 1500;
+  const canvas = document.getElementById('kalorienKreis');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const text = document.getElementById('kalorienText');
+  const prozent = Math.min(gesamtKcal / zielKalorien, 1);
+
+  // Kreis löschen
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Hintergrundkreis
+  ctx.beginPath();
+  ctx.arc(canvas.width/2, canvas.height/2, 90, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 20;
+  ctx.stroke();
+
+  // Fortschrittskreis
+  const endAngle = 2 * Math.PI * prozent;
+  ctx.beginPath();
+  ctx.arc(canvas.width/2, canvas.height/2, 90, -0.5 * Math.PI, endAngle - 0.5 * Math.PI);
+  ctx.strokeStyle = prozent >= 1 ? '#00ff88' : '#ff2c9c';
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  text.textContent = `${gesamtKcal} / ${zielKalorien} kcal`;
+  if (gesamtKcal >= zielKalorien) {
+    text.textContent += ' ✨ Ziel erreicht, Elly!';
+  }
+}function ladeProfil() {
+  const weight = localStorage.getItem("weight");
+  const height = localStorage.getItem("height");
+  const age = localStorage.getItem("age");
+
+  if (weight) {
+    document.getElementById("weight").value = weight;
+    document.getElementById("savedWeight").textContent = weight;
+  }
+  if (height) {
+    document.getElementById("height").value = height;
+    document.getElementById("savedHeight").textContent = height;
+  }
+  if (age) {
+    document.getElementById("age").value = age;
+    document.getElementById("savedAge").textContent = age;
+  }
+}
+
+document.getElementById("saveProfileBtn").addEventListener("click", () => {
+  const weight = document.getElementById("weight").value;
+  const height = document.getElementById("height").value;
+  const age = document.getElementById("age").value;
+
+  if (weight && height && age) {
+    localStorage.setItem("weight", weight);
+    localStorage.setItem("height", height);
+    localStorage.setItem("age", age);
+
+    document.getElementById("savedWeight").textContent = weight;
+    document.getElementById("savedHeight").textContent = height;
+    document.getElementById("savedAge").textContent = age;
+
+    alert("Profil wurde gespeichert! ✅");
+  } else {
+    alert("Bitte alle Felder ausfüllen.");
+  }
+});
+// ...dein bisheriger Code...
+
+function berechneBMI(gewicht, groesse) {
+  const groesseInMeter = groesse / 100;
+  const bmi = gewicht / (groesseInMeter * groesseInMeter);
+  return bmi.toFixed(1);
+}
+
+function bewerteBMI(bmi) {
+  if (bmi < 18.5) return "Untergewicht ❗";
+  if (bmi < 25) return "Normalgewicht ✅";
+  if (bmi < 30) return "Übergewicht ⚠️";
+  return "Adipositas ❗❗";
+}
+
+function zeigeBMI() {
+  const gewicht = parseFloat(localStorage.getItem("weight"));
+  const groesse = parseFloat(localStorage.getItem("height"));
+
+  if (!gewicht || !groesse) return;
+
+  const bmi = berechneBMI(gewicht, groesse);
+  const status = bewerteBMI(bmi);
+
+  document.getElementById("bmiWert").textContent = bmi;
+  document.getElementById("bmiStatus").textContent = status;
+}
+
+// Nach dem Laden und nach dem Speichern aufrufen:
+window.addEventListener("DOMContentLoaded", zeigeBMI);
+document.getElementById("saveProfileBtn").addEventListener("click", zeigeBMI);
+// Direkt beim Start laden
+// 🌤 Stimmung speichern
+function speichereStimmung(emoji) {
+  const heute = new Date().toISOString().split("T")[0];
+  localStorage.setItem("stimmung_" + heute, emoji);
+  document.getElementById("heutigeStimmung").textContent = emoji;
+}
+
+// 🌤 Stimmung beim Laden setzen
+(function ladeStimmung() {
+  const heute = new Date().toISOString().split("T")[0];
+  const mood = localStorage.getItem("stimmung_" + heute);
+  if (mood) {
+    document.getElementById("heutigeStimmung").textContent = mood;
+  }
+})();
+// ... andere Funktionen ...
+
+const sprueche = [
+  "Du rockst das heute! 🔥",
+  "Jeder Bissen bringt dich deinem Ziel näher. 🥗",
+  "Bleib dran, Elly – du bist großartig! 💪",
+  "Selbst kleine Schritte führen ans Ziel. 🚶‍♀️",
+  "Du gibst deinem Körper Liebe durch gutes Essen. ❤️",
+  "Ein neuer Tag, eine neue Chance. 🌞",
+  "Glaub an dich, Elly! 🌈",
+  "Disziplin ist der Weg zur Freiheit. 🎯",
+  "Du bist stärker als jede Versuchung. 🍫🚫",
+  "Stolz beginnt mit dem ersten Schritt. 👣"
+];
+
+function zeigeMotivationsspruch() {
+  const zufall = Math.floor(Math.random() * sprueche.length);
+  const textFeld = document.getElementById("spruchDesTages");
+  if (textFeld) {
+    textFeld.textContent = sprueche[zufall];
+  }
+}
+
+// Beim Laden der Seite aufrufen:
+zeigeMotivationsspruch();
+ladeProfil();
+zeigeBMI(); 

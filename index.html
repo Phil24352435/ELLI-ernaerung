@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ellis Ernährungstagebuch Pro</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head><link rel="manifest" href="manifest.json" />
+</head>
+<link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#ff80c0" />
 <meta name="description" content="Ellis Ernährungstagebuch Pro - Dein persönlicher Begleiter für gesunde Ernährung. Verfolge deine Mahlzeiten, Kalorien und Fortschritte.">
 <body>
@@ -17,6 +17,35 @@
     <label>Gewicht (kg): <input type="number" id="weight" /></label>
     <label>Größe (cm): <input type="number" id="height" /></label>
     <label>Alter: <input type="number" id="age" /></label>
+  <button id="saveProfileBtn">Profil speichern</button>
+
+<div class="profil-anzeige">
+  <h3>Ellys Profil:</h3>
+  <p><strong>Gewicht:</strong> <span id="savedWeight">-</span> kg</p>
+  <p><strong>Größe:</strong> <span id="savedHeight">-</span> cm</p>
+  <p><strong>Alter:</strong> <span id="savedAge">-</span> Jahre</p>
+<div class="bmi-anzeige">
+  <h3>BMI-Rechner</h3>
+  <p><strong>Dein BMI:</strong> <span id="bmiWert">-</span></p>
+  <p><strong>Bewertung:</strong> <span id="bmiStatus">-</span></p>
+</div>
+<!-- Stimmung und Motivation -->
+<div class="stimmung">
+  <h2>Wie fühlst du dich heute?</h2>
+  <div id="moodButtons">
+    <button onclick="speichereStimmung('😊')">😊</button>
+    <button onclick="speichereStimmung('😐')">😐</button>
+    <button onclick="speichereStimmung('😟')">😟</button>
+  </div>
+  <p>Deine Stimmung: <span id="heutigeStimmung">-</span></p>
+</div>
+
+<div class="motivation">
+  <h2>Motivationsspruch des Tages</h2>
+  <p id="spruchDesTages">Wird geladen...</p>
+</div>
+</div>
+
   </div>
 
   <div class="container">
@@ -53,7 +82,13 @@
     <div class="total">
       Gesamtkalorien: <span id="totalCalories">0</span> kcal
     </div>
-
+    <!-- Fortschrittskreis -->
+<div id="kalorienkreis-section" style="margin: 2rem auto; text-align: center;">
+  <canvas id="kalorienKreis" width="220" height="220"></canvas>
+  <p id="kalorienText" style="font-size: 18px; color: #fff; margin-top: 10px;">
+    0 / 1500 kcal
+  </p>
+</div>
     <div id="progressBox" class="legend">
       <h2>Dein Tagesfortschritt</h2>
       <div id="progressMessage"></div>
@@ -64,6 +99,10 @@
         <span class="green">Gut</span>
         <span class="yellow">Mittel</span>
         <span class="red">Schlecht</span>
+      <div class="motivation-circle">
+  <p id="spruchDesTages">Wird geladen...</p>
+</div>
+
       </div>
     
       <script src="script.js"></script>

@@ -172,7 +172,7 @@ footer p {
   margin: 0;
   font-size: 14px;
 }
-@media (max-width: 768px) { }
+@media (max-width: 768px) {
   body {
     font-size: 16px;
     padding: 10px;
@@ -217,7 +217,67 @@ footer p {
   .entry-row select {
     flex: 1 1 100%;
   }
+
   .entry-row button {
     flex: 1 1 100%;
     margin-top: 10px;
   }
+}
+.profil-anzeige {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  color: #ffb2da;
+  box-shadow: 0 0 10px #ff80c0;
+  text-align: left;
+}
+
+#saveProfileBtn {
+  background: linear-gradient(to right, #ff80c0, #ff00a0);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.bmi-anzeige {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  color: #b2ffdf;
+  box-shadow: 0 0 10px #80ffd3;
+  text-align: left;
+}
+.stimmung, .motivation {
+  margin-top: 30px;
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ff80c0;
+}
+
+#mooodButtons button {
+  font-size: 24px;
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 50%;
+  background-color: #333;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#mooodButtons button:hover {
+  transform: scale(1.2);
+}
+.motivation-circle {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #00ff88;
+  text-align: center;
+  text-shadow: 0 0 6px #00ff88;
+}
