@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ellis Ernährungstagebuch Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head><link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#ff80c0" />
+<meta name="description" content="Ellis Ernährungstagebuch Pro - Dein persönlicher Begleiter für gesunde Ernährung. Verfolge deine Mahlzeiten, Kalorien und Fortschritte.">
+<body>
+  <h1>Ellis Ernährungstagebuch</h1>
+
+  <div class="profile">
+    <h2>Ellis Körperdaten</h2>
+    <label>Gewicht (kg): <input type="number" id="weight" /></label>
+    <label>Größe (cm): <input type="number" id="height" /></label>
+    <label>Alter: <input type="number" id="age" /></label>
+  </div>
+
+  <div class="container">
+    <form id="entryForm">
+      <input type="date" id="date" required />
+      <select id="meal" required>
+        <option value="">Mahlzeit wählen</option>
+        <option>Frühstück</option>
+        <option>Mittagessen</option>
+        <option>Snack</option>
+        <option>Abendessen</option>
+      </select>
+      <input type="text" id="food" placeholder="Lebensmittel" required />
+      <input type="number" id="calories" placeholder="Kalorien (kcal)" required />
+      <input type="text" id="note" placeholder="Notiz (optional)" />
+      <button type="submit">Eintrag hinzufügen</button>
+    </form>
+
+    <h2>Einträge</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Mahlzeit</th>
+          <th>Lebensmittel</th>
+          <th>Kalorien</th>
+          <th>Notiz</th>
+          <th>✖</th>
+        </tr>
+      </thead>
+      <tbody id="entryTable"></tbody>
+    </table>
+
+    <div class="total">
+      Gesamtkalorien: <span id="totalCalories">0</span> kcal
+    </div>
+
+    <div id="progressBox" class="legend">
+      <h2>Dein Tagesfortschritt</h2>
+      <div id="progressMessage"></div>
+      <div class="bar">
+        <div id="progressBar"></div>
+      </div>
+      <div class="color-legend">
+        <span class="green">Gut</span>
+        <span class="yellow">Mittel</span>
+        <span class="red">Schlecht</span>
+      </div>
+    </div>
+
+    <div class="weekly-chart">
+      <h2>📊 Wochenübersicht</h2>
+      <canvas id="weeklyChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(reg => console.log("✅ Service Worker registriert:", reg.scope))
+        .catch(err => console.log("❌ Service Worker Fehler:", err));
+    });
+  }
+</script>
+
+</html>
